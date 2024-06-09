@@ -1,6 +1,7 @@
 package com.yasar.marathon_3.exception;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.http.HttpStatus;
@@ -88,6 +89,12 @@ public class GlobalExceptionHandler {
     public final ResponseEntity<ErrorMessage> handleMethodArgumentMisMatchException(
             MissingPathVariableException exception) {
 
+        ErrorType errorType = BAD_REQUEST_ERROR;
+        return new ResponseEntity<>(createMessage(errorType, exception), errorType.getHttpStatus());
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public final ResponseEntity<ErrorMessage> handleEntityNotFoundException(EntityNotFoundException exception) {
         ErrorType errorType = BAD_REQUEST_ERROR;
         return new ResponseEntity<>(createMessage(errorType, exception), errorType.getHttpStatus());
     }

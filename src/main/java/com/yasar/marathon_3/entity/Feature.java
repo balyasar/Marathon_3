@@ -1,5 +1,6 @@
 package com.yasar.marathon_3.entity;
 
+import com.yasar.marathon_3.entity.enums.ECategoryName;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,11 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor // default constructor
 @Builder
 @Entity
-@Table(name = "tbl_brand")
-public class Brand {
+@Table(name = "tbl_product_features")
+public class Feature {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // ID için otomatik artan bir HB sequence oluşturur.
     private Long id;
-    private String name;
-    private String brandCode;
+    private ECategoryName categoryName;
+    private String featureName;
+    private String description;
+    private Long productId;
 }

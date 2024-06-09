@@ -11,11 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor // default constructor
 @Builder
 @Entity
-@Table(name = "tbl_brand")
-public class Brand {
+@Table(name = "tbl_image")
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // ID için otomatik artan bir HB sequence oluşturur.
     private Long id;
     private String name;
-    private String brandCode;
+    private String imageUrl;
+    @Builder.Default
+    private Boolean isMainImage = false;
+    private Long productId;
 }

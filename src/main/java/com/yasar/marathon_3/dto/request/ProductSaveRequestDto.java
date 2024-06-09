@@ -1,6 +1,6 @@
-package com.yasar.marathon_3.entity;
+package com.yasar.marathon_3.dto.request;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +10,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor // parametreli constructorların tümü
 @NoArgsConstructor // default constructor
 @Builder
-@Entity
-@Table(name = "tbl_model")
-public class Model {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // ID için otomatik artan bir HB sequence oluşturur.
-    private Long id;
+public class ProductSaveRequestDto {
+    @NotNull
     private String name;
-    private String modelCode;
+    @NotNull
+    private Double price;
+    private Double taxRate;
+    private Integer stock;
+    private String barcode;
     private Long brandId;
+    private Long modelId;
 }
