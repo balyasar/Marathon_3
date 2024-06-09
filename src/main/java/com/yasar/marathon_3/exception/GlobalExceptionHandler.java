@@ -1,15 +1,22 @@
 package com.yasar.marathon_3.exception;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.yasar.marathon_3.exception.ErrorType.*;
 
 @ControllerAdvice
 @Slf4j
@@ -27,10 +34,10 @@ public class GlobalExceptionHandler {
      * eğer ilgili sınıf hata fırlatırsa onu yakalar.
      */
 
-    @ExceptionHandler(SatisException.class)
+    @ExceptionHandler(MarathonException.class)
     @ResponseBody
-    public ResponseEntity<ErrorMessage> handlerSatisException(SatisException satisException) {
-        return new ResponseEntity<>(createMessage(satisException.getErrorType(), satisException), satisException.getErrorType().getHttpStatus());
+    public ResponseEntity<ErrorMessage> handlerSatisException(MarathonException marathonException) {
+        return new ResponseEntity<>(createMessage(marathonException.getErrorType(), marathonException), marathonException.getErrorType().getHttpStatus());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -44,6 +51,45 @@ public class GlobalExceptionHandler {
                 .fields(fields)
                 .build();
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(JDBCConnectionException.class)
+    public final ResponseEntity<ErrorMessage> handleJDBCConnectionException(
+            HttpMessageNotReadableException exception) {
+        ErrorType errorType = BAD_REQUEST_ERROR;
+        return new ResponseEntity<>(createMessage(errorType, exception), errorType.getHttpStatus());
+    }
+
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public final ResponseEntity<ErrorMessage> handleMessageNotReadableException(
+            HttpMessageNotReadableException exception) {
+        ErrorType errorType = BAD_REQUEST_ERROR;
+        return new ResponseEntity<>(createMessage(errorType, exception), errorType.getHttpStatus());
+    }
+
+    @ExceptionHandler(InvalidFormatException.class)
+    public final ResponseEntity<ErrorMessage> handleInvalidFormatException(
+            InvalidFormatException exception) {
+        ErrorType errorType = BAD_REQUEST_ERROR;
+        return new ResponseEntity<>(createMessage(errorType, exception), errorType.getHttpStatus());
+    }
+
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public final ResponseEntity<ErrorMessage> handleMethodArgumentMisMatchException(
+            MethodArgumentTypeMismatchException exception) {
+
+        ErrorType errorType = BAD_REQUEST_ERROR;
+        return new ResponseEntity<>(createMessage(errorType, exception), errorType.getHttpStatus());
+    }
+
+    @ExceptionHandler(MissingPathVariableException.class)
+    public final ResponseEntity<ErrorMessage> handleMethodArgumentMisMatchException(
+            MissingPathVariableException exception) {
+
+        ErrorType errorType = BAD_REQUEST_ERROR;
+        return new ResponseEntity<>(createMessage(errorType, exception), errorType.getHttpStatus());
     }
 
     private ErrorMessage createMessage(ErrorType errorType, Exception exception) {

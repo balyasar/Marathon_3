@@ -10,10 +10,10 @@ import lombok.Getter;
  */
 
 @Getter
-public class SatisException extends RuntimeException {
+public class MarathonException extends RuntimeException {
     private ErrorType errorType;
 
-    public SatisException(ErrorType errorType) {
+    public MarathonException(ErrorType errorType) {
         super(errorType.getMessage());
         this.errorType = errorType;
     }
