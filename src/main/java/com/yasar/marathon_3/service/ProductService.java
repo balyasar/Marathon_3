@@ -24,7 +24,7 @@ public class ProductService {
         return repository.findAll();
     }
 
-    public List<Product> getAllProductsByFeatures(ECategoryName categoryName, String featureName) {
+    public List<String> getAllProductsByFeatures(ECategoryName categoryName, String featureName) {
         return featureService.getAllProductsByFeatures(categoryName, featureName);
     }
 }

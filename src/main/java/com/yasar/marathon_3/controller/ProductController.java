@@ -38,7 +38,7 @@ public class ProductController {
     }
 
     @GetMapping(GETALLPRODUCTBYFEATURES)
-    public ResponseEntity<List<Product>> getAllProductsByFeatures(ECategoryName categoryName, String featureName) {
+    public ResponseEntity<List<String >> getAllProductsByFeatures(ECategoryName categoryName, String featureName) {
         return ResponseEntity.ok(service.getAllProductsByFeatures(categoryName, featureName));
     }
 }

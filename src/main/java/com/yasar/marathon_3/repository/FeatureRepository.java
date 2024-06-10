@@ -12,5 +12,5 @@ import java.util.List;
 public interface FeatureRepository extends JpaRepository<Feature, Long> {
 
     @Query("select f.productId from Feature f where f.categoryName = :categoryName and f.featureName = :featureName ")
-    List<Product> findAllProductsByFeatures(@Param("categoryName") ECategoryName categoryName, @Param("featureName") String featureName);
+    List<String> findAllProductsByFeatures(@Param("categoryName") ECategoryName categoryName, @Param("featureName") String featureName);
 }

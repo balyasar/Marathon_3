@@ -26,7 +26,7 @@ public class FeatureService {
     }
 
 
-    public List<Product> getAllProductsByFeatures(ECategoryName categoryName, String featureName) {
+    public List<String > getAllProductsByFeatures(ECategoryName categoryName, String featureName) {
         return repository.findAllProductsByFeatures(categoryName, featureName);
     }
 
